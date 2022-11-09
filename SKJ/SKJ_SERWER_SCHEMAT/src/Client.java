@@ -20,7 +20,7 @@ public class Client {
 
         try {
             Socket s = new Socket(Smyk_server_ip_adress,Smyk_server_port_adress);
-            PrintWriter printWriter = new PrintWriter(s.getOutputStream());
+            PrintWriter printWriter = new PrintWriter(s.getOutputStream(),true);
             Scanner scanner = new Scanner(s.getInputStream());
 
             printWriter.println(first_flag);
