@@ -9,35 +9,31 @@ public class Server {
 
      final int port_id = 5050;  //deklaracja jakiego id używasz
 
-//TODO; Obie probablyRequired nie działają, ogólnie BufferReader nie działa mi nie wiem czemu fix that
-
 
     public static void probablyRequired(BufferedReader bufferedReader,PrintWriter printWriter) throws IOException {
         //Wczytanie 1 lini od klienta i wypisanie jej
-        String temp = bufferedReader.readLine();
-        System.out.println(temp);
-        //printWriter.println(temp);
-
+        System.out.println(bufferedReader.readLine());
+        System.out.println(bufferedReader.readLine());
     }
 
-    public static void probablyRequired(Socket socket) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
-        //Wczytanie 1 lini od klienta i wypisanie jej
-        String temp;
-        temp = bufferedReader.readLine();
-        System.out.println(temp);
-        //printWriter.println(temp);
 
+    public  static void ExampleServerFunction(BufferedReader bufferedReader,PrintWriter printWriter) throws IOException {
+        // Np zadanie jedno wymaga odebranie linijki i odesłanie jej skonkatenowanej 8 razy
+        String lineToConcatate = bufferedReader.readLine();
+        int howManyTimes = 0;
+
+        for(int i = 0; i <= howManyTimes;i++){
+            lineToConcatate += lineToConcatate;
+        }
+        printWriter.println(lineToConcatate);
     }
-
-    //Definicja wymaganych zadań funkcji, możliwe że potem dodam by otrzymywała socketa i printwritera / bufferreadera
-    public static void serverFunction_1(BufferedReader bufferedReader,PrintWriter printWriter){}
-    public static void serverFunction_2(BufferedReader bufferedReader,PrintWriter printWriter){}
-    public static void serverFunction_3(BufferedReader bufferedReader,PrintWriter printWriter){}
-    public static void serverFunction_4(BufferedReader bufferedReader,PrintWriter printWriter){}
-    public static void serverFunction_5(BufferedReader bufferedReader,PrintWriter printWriter){}
-    public static void serverFunction_6(BufferedReader bufferedReader,PrintWriter printWriter){}
+    //Definicja wymaganych zadań funkcji
+    public static void serverFunction_1(BufferedReader bufferedReader,PrintWriter printWriter) throws IOException {}
+    public static void serverFunction_2(BufferedReader bufferedReader,PrintWriter printWriter) throws IOException{}
+    public static void serverFunction_3(BufferedReader bufferedReader,PrintWriter printWriter) throws IOException{}
+    public static void serverFunction_4(BufferedReader bufferedReader,PrintWriter printWriter) throws IOException{}
+    public static void serverFunction_5(BufferedReader bufferedReader,PrintWriter printWriter) throws IOException{}
+    public static void serverFunction_6(BufferedReader bufferedReader,PrintWriter printWriter) throws IOException{}
 
     // In here put everything server should do
     public static void ServerFunction (Socket socket) throws IOException {}
@@ -53,14 +49,12 @@ public class Server {
         public void run() {
             try {
 
+
                 //Basic initialization
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
-
-                printWriter.println("Hello");
                 // Uncomment if required
-                 probablyRequired(this.socket);
-
+                //probablyRequired(bufferedReader,printWriter);
 
                 //Functions
                 serverFunction_1(bufferedReader,printWriter);
@@ -88,6 +82,7 @@ public class Server {
 
     public void listenSocket(int port){
         ServerSocket serverSocket = null;
+        Socket client = null;
         try {
             serverSocket = new ServerSocket(port);
 
@@ -97,7 +92,7 @@ public class Server {
         }
         System.out.println("Server listens on port: " + serverSocket.getLocalPort());
         while(true) {
-            Socket client = null;
+
             try {
                 client = serverSocket.accept();
                 System.out.println("[S] connecting with:" + client.getPort());
